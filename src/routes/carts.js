@@ -61,4 +61,22 @@ router.post('/:cid/product/:pid', async (req, res) => {
     res.json({ message: 'Producto agregado al carrito', cart });
 });
 
+router.post('/', async (req, res) => {
+    const carts = await readFile(cartsFilePath);
+
+    const newCartId = carts.length > 0 ? carts[carts.length - 1].id + 1 : 1;
+
+    const newCart = {
+        id: newCartId,
+        products: []
+    };
+
+    carts.push(newCart);
+
+    await writeFile(cartsFilePath, carts);
+
+    res.status(201).json({ message: 'Carrito creado con éxito', cart: newCart });
+});
+
+
 export default router;

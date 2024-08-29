@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Producto Test",
+    "description": "Descripción de prueba",
+    "code": "TEST123",
+    "price": 50,
+    "status": true,
+    "stock": 100,
+    "category": "Categoría Test",
+    "thumbnails": [
+      "ruta/a/imagen1.jpg",
+      "ruta/a/imagen2.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Producto Test2",
+    "description": "Descripción de prueba",
+    "code": "TEST1233",
+    "price": 50,
+    "status": true,
+    "stock": 100,
+    "category": "Categoría Test2",
+    "thumbnails": [
+      "ruta/a/imagen1.jpg",
+      "ruta/a/imagen2.jpg"
+    ]
+  }
+]
