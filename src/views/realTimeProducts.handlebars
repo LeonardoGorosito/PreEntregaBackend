@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Time Products</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const socket = io();
+      const productList = document.getElementById('product-list');
+      const form = document.getElementById('product-form');
+      const deleteForm = document.getElementById('delete-form');
+
+      // Actualizar lista de productos cuando se recibe un evento
+      socket.on('updateProductList', (products) => {
+        productList.innerHTML = '';
+        products.forEach(product => {
+          const li = document.createElement('li');
+          li.textContent = product.name;
+          productList.appendChild(li);
+        });
+      });
+
+      // Enviar nuevo producto
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const name = formData.get('name');
+        socket.emit('updateProductList', { action: 'add', name });
+        form.reset();
+      });
+
+      // Eliminar producto
+      deleteForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(deleteForm);
+        const id = formData.get('id');
+        socket.emit('updateProductList', { action: 'delete', id });
+        deleteForm.reset();
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Productos en Tiempo Real</h1>
+  <ul id="product-list">
+    {{#each products}}
+      <li>{{this.name}}</li>
+    {{/each}}
+  </ul>
+  <h2>Agregar Producto</h2>
+  <form id="product-form">
+    <input type="text" name="name" required />
+    <button type="submit">Agregar</button>
+  </form>
+  <h2>Eliminar Producto</h2>
+  <form id="delete-form">
+    <input type="number" name="id" required />
+    <button type="submit">Eliminar</button>
+  </form>
+</body>
+</html>

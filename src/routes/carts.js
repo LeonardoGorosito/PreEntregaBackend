@@ -78,5 +78,4 @@ router.post('/', async (req, res) => {
     res.status(201).json({ message: 'Carrito creado con éxito', cart: newCart });
 });
 
-
 export default router;
